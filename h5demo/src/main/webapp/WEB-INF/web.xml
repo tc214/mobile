@@ -7,14 +7,14 @@
     <display-name>mobile app</display-name>
 
     <!-- 解决Jetty锁文件,调试不能修改的问题	-->
-<!--    <servlet>-->
-<!--        <servlet-name>default</servlet-name>-->
-<!--        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>-->
-<!--        <init-param>-->
-<!--            <param-name>useFileMappedBuffer</param-name>-->
-<!--            <param-value>false</param-value>-->
-<!--        </init-param>-->
-<!--    </servlet>-->
+	<servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>useFileMappedBuffer</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </servlet>
 
 
     <welcome-file-list>
