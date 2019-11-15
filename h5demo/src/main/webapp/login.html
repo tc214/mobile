@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>登录</title>
+    <link rel="stylesheet" href="assets/css/weui.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/myCss.css" type="text/css">
+    <link rel="stylesheet" href="assets/jquery-weui/css/jquery-weui.min.css" type="text/css">
+</head>
+<body ontouchstart style="background:#fff;">
+<div class="page grid js_show">
+    <div class="login">
+        <div class="title"><span>密码登录</span><img src="assets/images/login.png"></div>
+        <div class="login-list">
+            <ul>
+                <li><input type="text" id="loginId" name="loginId" placeholder="请输入登录名"><img
+                        src="assets/images/loginIco.gif"></li>
+                <li><input type="password" id="loginPwd" name="loginPwd" placeholder="请输入登录密码"><img
+                        src="assets/images/loginIco.gif"></li>
+            </ul>
+        </div>
+        <div class="loginBtn" onclick="doLogin();"><a>登录</a></div>
+        <div class="passtit"><a href="index.html">返回首页</a></div>
+    </div>
+    <div class="footer">火山科技有限公司</div>
+</div>
+
+<!--开源-->
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/weui.min.js"></script>
+<script type="text/javascript" src="assets/jquery-weui/js/jquery-weui.min.js"></script>
+
+<!--自定义-->
+<script type="text/javascript" src="assets/js/util.js"></script>
+<script type="text/javascript" src="assets/js/api/httpStatus.js"></script>
+<script type="text/javascript" src="assets/js/api/identity.js"></script>
+<script type="text/javascript" src="assets/js/api/domain.js"></script>
+<script type="text/javascript" src="assets/js/const.js"></script>
+<script type="text/javascript" src="assets/js/md5.js"></script>
+<script type="text/javascript" src="assets/js/api/cookie.js"></script>
+
+
+<script type="text/javascript">
+
+
+    function doLogin() {
+        var loginName = document.getElementById("loginId").value;//
+        var loginPwd = document.getElementById("loginPwd").value;//
+        var loginMd5Pwd = hex_md5(loginPwd).toLowerCase();
+
+        com.ident.apiPostLogin(loginName, loginMd5Pwd, callback, error);
+        var openid = com.util.getUrlParam("openid"); // 第三方登录
+
+        function callback(data) {
+            if (data.code == apiHttp.OK) {
+                /**登录成功后写入cookie方便下次免登陆*/
+                com.apicookie.setCookie(com.const.loginNameKey, loginName, com.const.appCurrentLoginExpires);
+                window.location = "index.html"; // 回到主页，也可以回到上一个页面
+            }
+        }
+
+        function error(result) {
+            if (result == null) {
+
+            } else {
+                alert( result.errCode +" =  "+ result.errMsg);
+
+                if (result == null) {
+
+                } else {
+                    // alert( result.errCode +" =  "+ result.errMsg);
+                    switch (result.errCode) {
+                        /**1008不存在或停用*/
+                        case(1008):
+                            alert(result.errMsg, '登录');
+                            break;
+                        default:
+                            alert(result.errMsg);
+                    }
+                }
+            }
+        }
+    }
+
+</script>
+
+
+</body>
+</html>

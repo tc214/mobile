@@ -121,7 +121,7 @@
           <p class="weui-tabbar__label">聊天</p>
       </a>
 
-      <a href="javascript:;" class="weui-tabbar__item">
+      <a href="javascript:;" class="weui-tabbar__item" onclick="javascript:pageChange('login.html');">
           <img src="assets/images/my.png" alt="" class="weui-tabbar__icon">
           <p class="weui-tabbar__label">我</p>
       </a>
@@ -149,8 +149,8 @@
           }
       });
 
-      function pageChange(object) {
-
+      function pageChange(index) {
+           window.location = index;
       }
   </script>
   </body>
