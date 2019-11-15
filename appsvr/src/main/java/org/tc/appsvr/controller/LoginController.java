@@ -2,6 +2,7 @@ package org.tc.appsvr.controller;
 
 
 import cn.hutool.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,9 @@ import org.tc.appsvr.service.SysUserService;
 
 import javax.annotation.Resource;
 
+
+
+@Slf4j
 @RestController
 @RequestMapping("/login")
 public class LoginController {

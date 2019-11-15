@@ -12,7 +12,7 @@ import static org.tc.appsvr.jwt.JwtProperties.JWT_PREFIX;
  * @since 2019-11-14
  */
 @Data
-@ConfigurationProperties(prefix= JwtProperties.JWT_PREFIX)
+@ConfigurationProperties(prefix= JWT_PREFIX)
 public class JwtProperties {
     static final String JWT_PREFIX= "jwt.config";
     /**

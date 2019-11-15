@@ -64,6 +64,7 @@ public class JwtPayloadBuilder {
     public String builder() {
         payLoad.put("iss", this.iss);
         payLoad.put("sub", this.sub);
+        payLoad.put("aud", this.aud);
         payLoad.put("exp", this.exp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         payLoad.put("iat", this.iat.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         payLoad.put("jti", this.jti);

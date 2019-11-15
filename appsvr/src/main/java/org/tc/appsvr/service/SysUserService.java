@@ -7,9 +7,9 @@ public interface SysUserService {
 
 
 
-    void addUser(SysUser user);
-    void updateUser(SysUser user);
-    void removeUser(SysUser user);
+    Integer addUser(SysUser user);
+    Integer updateUser(SysUser user);
+    Integer removeUser(SysUser user);
 
     SysUser queryByUsername(String userName);
 
