@@ -14,7 +14,9 @@ import org.tc.appsvr.entity.SysUser;
 import org.tc.appsvr.service.SysUserService;
 
 import javax.annotation.Resource;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 
 @Slf4j
@@ -28,14 +30,17 @@ public class LoginController {
 
 
     @PostMapping(value="/success")
-    public Rest myLoginSuccess() {
+    public Rest myLoginSuccess(HttpServletRequest req, HttpServletResponse res) {
         // 登录成功后用户的认证信息 UserDetails会存在 SecurityContextHolder 中
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = principal.getUsername();
-        SysUser sysUser = sysUserService.queryByUsername(username);
+        String loginName = principal.getUsername();
+        SysUser sysUser = sysUserService.queryByUsername(loginName);
+        String loginPwd = principal.getPassword();
         // 脱敏
         sysUser.setEncodePassword("[PROTECT]"); // 不返回真实的密码
-        return RestBody.okData(sysUser,"登录成功");
+        Map resMap = sysUserService.getAuthToken(req, res, loginName, loginPwd, "user");
+
+        return RestBody.okData(resMap,"登录成功");
     }
 
 
