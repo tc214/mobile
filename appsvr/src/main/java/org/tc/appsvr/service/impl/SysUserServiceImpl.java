@@ -3,7 +3,10 @@ package org.tc.appsvr.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
+import org.tc.appsvr.cache.RedisConstants;
+import org.tc.appsvr.cache.RedisUtils;
 import org.tc.appsvr.entity.SysUser;
+import org.tc.appsvr.jwt.JWTConst;
 import org.tc.appsvr.jwt.JwtTokenGenerator;
 import org.tc.appsvr.jwt.JwtTokenPair;
 import org.tc.appsvr.mapper.SysUserMapper;
@@ -28,6 +31,12 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Resource
     private JwtTokenGenerator jwtTokenGenerator;
+
+    @Resource
+    private RedisUtils redisUtils;
+
+
+
 
 
     @Override
@@ -66,8 +75,10 @@ public class SysUserServiceImpl implements SysUserService {
         roles.add("user");
         JwtTokenPair tokenPair = jwtTokenGenerator.jwtTokenPair(loginName, roles, claims);
         // 保存token到redis
-
-
+        redisUtils.set(ConstUtil.CONN_AUTH_ACCESS_TOKEN, tokenPair.getAccessToken(), JWTConst.CONN_TOKEN_EXPIRATION);
+        redisUtils.set(ConstUtil.CONN_AUTH_REFRESH_TOKEN, tokenPair.getRefreshToken(),JWTConst.CONN_TOKEN_EXPIRATION_REMEMBER);
+        System.out.println("access_token:"+redisUtils.get(ConstUtil.CONN_AUTH_ACCESS_TOKEN, RedisConstants.CONN_REDIS_DB_INDIX_0));
+        System.out.println("refresh_token:"+redisUtils.get(ConstUtil.CONN_AUTH_REFRESH_TOKEN, RedisConstants.CONN_REDIS_DB_INDIX_0));
 
         map.put("user", sysUser);
         map.put("token", tokenPair.getAccessToken());
