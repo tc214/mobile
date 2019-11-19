@@ -8,6 +8,16 @@ public class ConstUtil {
     public static String CONN_AUTH_TOKEN_MODULE = "AuthToken";
 
     /**
+     * 访问token
+     */
+    public static String CONN_AUTH_ACCESS_TOKEN = "AccessToken";
+
+    /**
+     * 刷新token
+     */
+    public static String CONN_AUTH_REFRESH_TOKEN = "RefreshToken";
+
+    /**
      * 角色key
      */
     public static String CONN_LOGIN_ROLE_ID = "roleId";
